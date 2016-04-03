@@ -38,7 +38,7 @@ class Entity(object):
     y = None
     xspan = 1
     yspan = 1
-
+    _defaults = dict()
 
     def __init__(self, *args, **kwargs):
         # Set by the subclass in create_preorder/create_postorder
@@ -55,21 +55,21 @@ class Entity(object):
             raise TypeError("%s takes positional arguments %s, %d more given" % (self, self.positional, len(args)-len(self.positional)))
         if 'kwargs' in self.props:
             self.kwargs = {}
+        for k,v in dict(self._defaults, **kwargs).items():
+            if k in self.props:
+                setattr(self, k, v)
+            else:
+                if k.startswith('EVT_') and isinstance(self, Window):
+                    self._events.append((k, v))
+                elif 'kwargs' in self.props:
+                    self.kwargs[k] = v
+                else:
+                    raise TypeError("%s does not have a writable '%s' attribute" % (type(self), k))
         for argname,arg in zip(self.positional, args):
             if argname in kwargs:
                 raise TypeError("%s passed both by keyword and as positional argument %d" % (argname,self.positional.index(argname)+1))
             assert argname in self.props
             setattr(self, argname, arg)
-        for k,v in kwargs.items():
-            if k in self.props:
-                setattr(self, k, v)
-            else:
-                if 'kwargs' in self.props:
-                    self.kwargs[k] = v
-                elif k.startswith('EVT_') and isinstance(self, Window):
-                    self._events.append((k, v))
-                else:
-                    raise TypeError("%s does not have a writable '%s' attribute" % (type(self), k))
 
         # Hierarchy management:
         self._entered = False # has __enter__/__exit__, which sets .w and .sized, been done yet?
@@ -134,13 +134,14 @@ class Entity(object):
     @classmethod
     @contextlib.contextmanager
     def Default(cls, **kwargs):
-        original = [(k,getattr(cls,k)) for k in kwargs if hasattr(cls,k)]
-        for k,v in kwargs.items(): setattr(cls, k, v)
+        original = cls._defaults
+        cls._defaults = original.copy()
+        cls._defaults.update(kwargs)
         try:
             yield None
         finally:
             _flush_implicit_with() 
-            for k,v in original: setattr(cls, k, v)
+            cls._defaults = original
         
     def create_preorder(self):
         u"""Code to be run from __enter__, before child windows are processed."""
