@@ -12,6 +12,7 @@ class DemoFrame(wx.Frame):
         with iz.Frame(init=self, parent=parent, title=u'Hello world',
                       size=(-1, 400)) as fr, iz.Panel(orient=wx.VERTICAL):
             iz.Choice(list('abcdef'))
+            iz.ComboBox('g', list('abcdef'))
             try:
                 iz.DatePickerCtrl
             except AttributeError:

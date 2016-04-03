@@ -449,6 +449,15 @@ class Choice(Control):
     def create_wxwindow(self):
         return self.initfn(wx.Choice)(self.parent, self.id, self.pos, self.size, self.choices, self.style, self.validator, self.name)
 
+class ComboBox(Control):
+    props = Control.props | set(['choices','value'])
+    positional = ['value', 'choices']
+    name = 'comboBox'
+    value = ''
+    choices = []
+    def create_wxwindow(self):
+        return self.initfn(wx.ComboBox)(self.parent, self.id, self.value, self.pos, self.size, self.choices, self.style, self.validator, self.name)
+
 try:
     wx.DatePickerCtrl
 except AttributeError:
