@@ -49,7 +49,7 @@ sizer, and automatically added.
 
 
 To create a wx.Window control, use the identically named wize class.
-The __init__ parameters are the same as for the wxPython object, except for this:
+The \_\_init\_\_ parameters are the same as for the wxPython object, except for this:
 
    * There are only a 1-2 (or an occasional 3) positional
       parameters. `parent`, `id`, `pos`, `size`
@@ -61,7 +61,7 @@ The __init__ parameters are the same as for the wxPython object, except for this
    * `x`, `y`, `xspan`
       and `yspan` provide additional parent sizer Add
       arguments, for when the parent sizer is a GridBagSizer.
-   * `EVT_\*` parameters provide an event binding
+   * `EVT_*` parameters provide an event binding
      shorthand.
 
    * `init` or `cls` are useful for subclassing.
@@ -88,7 +88,7 @@ use no BoxSizer is created and the child is used instead.
 
 When implementing the whole of a top-level window using wxWize,
 define the wxWize hierarchy (of nested with-statements) in the
-__init__ of your wx.Frame/wx.Dialog subclass. Use
+\_\_init\_\_ of your wx.Frame/wx.Dialog subclass. Use
 the `init` parameter for the top-level call to
 wize.Frame/wize.Dialog.
 
@@ -292,27 +292,27 @@ That's not at all hard to do.  If you look in wize.py, you can see how
 
 But there are other options: For wx.Frame and wx.Dialog subclasses,
 define the wxWize object hierarchy by using nested with's in
-  __init__. For the root of the with-hierarchy, use a wize.Frame or wize.Dialog
+  \_\_init\_\_. For the root of the with-hierarchy, use a wize.Frame or wize.Dialog
   with init=self.
 
 Finally there's `cls`, which is an option, if the
-subclass __init__ parameter list is identical to the parent
-__init__.
+subclass \_\_init\_\_ parameter list is identical to the parent
+\_\_init\_\_.
 
 ### Subclassing with `init`
 
 The `init` parameter provides a way to use wxWize from
-within the __init__ of a wxPython window subclass. It goes like this:
+within the \_\_init\_\_ of a wxPython window subclass. It goes like this:
 
 
-Instead of calling parent __init__ from within the subclass
-  __init__, create a wxWize object using `init=self`
-  instead. Now wxWize will call the parent __init__ with the same
+Instead of calling parent \_\_init\_\_ from within the subclass
+  \_\_init\_\_, create a wxWize object using `init=self`
+  instead. Now wxWize will call the parent \_\_init\_\_ with the same
   parameters it would otherwise have used to create a new object.
 
 ### Subclassing with `cls`
 
-If the subclass __init__ takes the same parameters as the parent
+If the subclass \_\_init\_\_ takes the same parameters as the parent
   class, then you can use an existing wxWize-class
   with `cls=MyNewSubclass`. The `cls` parameter
   tells wxWize to create the window using this class instead of the normal wxPython class.
@@ -378,7 +378,7 @@ current hierarchy, but stand on their own.
 ## Parameters not in the wxWidgets docs
 
 The wxPython/wxWidgets documentation for creating objects can be
-used with wxWize as well, since all the documented __init__
+used with wxWize as well, since all the documented \_\_init\_\_
 parameters are available.
    
 Here's an overview of the additional parameters that are specific to wxWize:
@@ -388,7 +388,7 @@ Here's an overview of the additional parameters that are specific to wxWize:
 | --------------		| ----------- |
 | w						| Pre-created wxPython object. |
 | cls					| Subclass of the wrapped wxPython class to use. |
-| init					| init=self if using wxWize to initialise the parent class in __init__ |
+| init					| init=self if using wxWize to initialise the parent class in \_\_init\_\_ |
 | proportion			| Sizer Add parameter. |
 | flag					| Sizer Add parameter. |
 | border				| Sizer Add parameter. |
@@ -401,7 +401,7 @@ Here's an overview of the additional parameters that are specific to wxWize:
 | xspan					| GridBagSizer column span. |
 | yspan					| GridBagSizer row span. |
 | orient				| Layout of children, wx.VERTICAL or wx.HORIZONTAL |
-| callback				| EVT_MENU action for MenuItem\'s |
+| callback				| EVT_MENU action for MenuItem's |
 | thickness				| StaticLine line width. |
 | InterpClass_args		| \*args for Shell to pass to InterpClass  |
 | InterpClass_kwargs	| \*\*kwargs for Shell to pass to InterpClass  |
