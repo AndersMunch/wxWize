@@ -46,8 +46,8 @@ class DemoFrame(wx.Frame):
                         iz.StaticLine(10)
 
                         
-            with iz.SplitterWindow(wx.HORIZONTAL, sashGravity=0.5, proportion=0):
-                iz.StaticText('SplitterWindow left is lilac.', bgcolour='#c8a2c8')
+            with iz.SplitterWindow(wx.HORIZONTAL, sashGravity=0.5, proportion=0, sashPosition=50):
+                iz.StaticText('SplitterWindow left is lilac and only 50 pixels initially', bgcolour='#c8a2c8')
                 iz.StaticText('<=SASH   SplitterWindow right is red.', bgcolour='RED')
             with iz.SplitterWindow(wx.VERTICAL, sashGravity=0.25, proportion=2):
                 with iz.Panel(bgcolour='#008080', orient=wx.VERTICAL):

@@ -551,6 +551,7 @@ class SplitterWindow(Window):
     flag = wx.EXPAND
     minimumPaneSize = 1 # 0 enables the misguided default behaviour of irrecoverably hiding RHS on double-click
     sashGravity = 0.5
+    sashPosition = None
     def create_wxwindow(self):
         return self.initfn(wx.SplitterWindow)(self.parent, self.id, self.pos, self.size, self.style, self.name)
     def create_postorder(self):
@@ -562,6 +563,7 @@ class SplitterWindow(Window):
             self.w.SplitHorizontally(self.zchildren[0].w, self.zchildren[1].w)
         else:
             self.w.SplitVertically(self.zchildren[0].w, self.zchildren[1].w)
+        if self.sashPosition is not None: self.w.SetSashPosition(self.sashPosition)
 
 class SpinCtrl(Window):
     props = Window.props | set(['value','min','max','initial'])

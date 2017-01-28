@@ -313,10 +313,8 @@ puts a 3 pixels high line horisontal line across the full width.
 
 `SplitterWindow(wx.HORIZONTAL)` puts the two nested windows side by side
 with a resizing sash between. `SplitterWindow(wx.VERTICAL)` puts the two
-nested windows on top of one another.
-
-SetSashGravity and SetMinimumPaneSize are called automatically with
-the sashGravity and minimumPaneSize attribute values.
+nested windows on top of one another. (Don't call `SplitVertically` or
+`SplitHorizontally`, it's automatic.)
 
 The default of sashGravity=0.5 makes the subwindows equal sized, and
 the default of minimumPaneSize=1 ensures that the second subwindow
@@ -451,4 +449,6 @@ Here's an overview of the additional parameters that are specific to wxWize:
 | thickness				| StaticLine line width. |
 | InterpClass_args		| \*args for Shell to pass to InterpClass  |
 | InterpClass_kwargs	| \*\*kwargs for Shell to pass to InterpClass  |
+| sashGravity			| SplitterWindow.SetSashGravity parameter |
+| minimumPaneSize		| SplitterWindow.SetMinimumPaneSize parameter |
 | EVT_\*				| Set an event callback. |
