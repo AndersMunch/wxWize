@@ -126,7 +126,7 @@ class Entity(object):
             # A common error is to forget the trailing .wx; be forgiving, but warn
             import warnings
             warnings.warn('wize.%s has no attribute %s: substituting .wx.%s' % (
-                type(self).__name__, att, att))
+                type(self).__name__, att, att), stacklevel=2)
             return getattr(self.w, att)
         else:
             raise AttributeError('wize.%s has no attribute %s' % (type(self).__name__, att))
