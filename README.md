@@ -73,13 +73,12 @@ For windows that can have sub-windows (wize.Frame, wize.Dialog, wize.Panel,
 wize.StaticBox), use the with statement and nest other windows or sizers
 below it.
 
-
 If needed, a BoxSizer is created automatically and passed to
 SetSizer. Use  the `orient` parameter
 to set the direction.
 
 If there is only one child and that child is a sizer, then
-use no BoxSizer is created and the child is used instead.
+no BoxSizer is created and the child is used instead.
 
 
 ### Interfacing with ordinary wxPython code
@@ -128,15 +127,13 @@ The sizers and windows created are ordinary wx.Sizer and wx.Window
 objects. `with wize. as *variable*` binds the
 wrapped  wxPython object to *variable*.
 
-
 All the wxWize classes are intended to be used in a Python with
 statement.   The value bound with `with .. as` is the
 wrapped wxPython object, a wx.Window or a wx.Sizer.
 
-
 For simple objects with no sub-objects -- StaticText, TextCtrl,
-  Choice etc. -- the with statement can be omitted. In that case, to get
-  at the wrapped wxPython object, use the `wx` property.
+Choice etc. -- the with statement can be omitted. In that case, to get
+at the wrapped wxPython object, use the `wx` property.
 
 E.g. instead of writing:
 ```python
@@ -151,6 +148,31 @@ you can write, to the same effect::
         name_input = wize.TextCtrl().wx
 ```
 
+### Menus
+
+Just like the with statement and indentation is used to place controls into the sizer
+hierarchy, the with statement and indentation can be used to create
+menus and submenus. See the example in `demo_pallette.py`.
+
+Start with a `wize.MenuBar` or `wize.PopupMenu` at the top level. Nested within
+that, use `wize.MenuItem`'s to create simple menu entries, and `wize.Menu`'s to
+create submenus.
+
+For an application-global menu bar, use `wize.MenuBar`, with the main
+frame of application as the parent. That is to say, either nest
+`wize.MenuBar` within a `wize.Frame`, or provide the `wx.Frame` in the
+`parent` parameter. The immediate children must be `wize.Menu`'s, not
+MenuItem's.
+
+For a pop-up menu, use `wize.PopupMenu` as the top-level item, nesting
+`wize.MenuItem` and `wize.Menu` objects as desired.
+
+`wize.MenuCheck` and `wize.MenuRadio` are shortcuts for
+`wize.MenuItem` with parameters to create a menu item with a checkbox,
+with a radio button.
+
+Also there's `wize.MenuSeparator` which adds a separate line between
+menu items.
 
 ## Specific features
 
@@ -199,11 +221,11 @@ The Default classmethod temporarily changes the default value of one or
   parameters which are the new defaults for the class for anything
   created within the scope of the with statement.
 
-For example, to revert the default flag value for sizers back to 0,
+For example, to revert the default flag value for a BoxSizer back to 0,
 instead of wx.EXPAND, do this:
 
 ```python
-with wize.Sizer.Default(flag=0):
+with wize.BoxSizer.Default(flag=0):
     ....
 ```
 
@@ -335,6 +357,7 @@ current hierarchy, but stand on their own.
 | Button			| label						|
 | CheckBox			| label						|
 | Choice			| choices					|
+| ComboBox			| value, choices			|
 | CommandLinkButton	| mainLabel, note			|
 | Control			| w							|
 | DatePickerCtrl	| dt						|
