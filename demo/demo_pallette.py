@@ -10,13 +10,13 @@ import wize as iz
 class DemoFrame(wx.Frame):
     def __init__(self, parent=None):
         with iz.Frame(init=self, parent=parent, title=u'Hello world',
-                      size=(-1, 400)) as fr, iz.Panel(orient=wx.VERTICAL):
+                      size=(-1, 600)) as fr, iz.Panel(orient=wx.VERTICAL):
             iz.Choice(list('abcdef'))
             iz.ComboBox('g', list('abcdef'))
             try:
                 iz.DatePickerCtrl
             except AttributeError:
-                pass
+                pass # Phoenix may not have DatePickerCtrl yet
             else:
                 iz.DatePickerCtrl()
             with iz.StaticBox(label=u"checkbox and button", orient=wx.HORIZONTAL):
@@ -30,8 +30,8 @@ class DemoFrame(wx.Frame):
                 iz.CommandLinkButton(u'A Command Link Button', u'(Native to Win7, emulated elsewhere.)', EVT_BUTTON=self.OnButton)
             with iz.TextCtrl('TextCtrl', flag=wx.EXPAND):
                 pass
-            with iz.Panel(bgcolour='#FFFFBB'):
-                with iz.StaticLine.Default(thickness=3), iz.StaticText.Default(border=5):
+            with iz.Panel(bgcolour='#FFFFBB', proportion=1):
+                with iz.StaticLine.Default(thickness=3, border=5):
                     with iz.BoxSizer(wx.VERTICAL):
                         iz.StaticLine(10)
                         iz.StaticText("Space 5")
@@ -44,6 +44,17 @@ class DemoFrame(wx.Frame):
                         iz.StaticLine()
                         iz.StaticText("End space panel")
                         iz.StaticLine(10)
+
+                        
+            with iz.SplitterWindow(wx.HORIZONTAL, sashGravity=0.5, proportion=0):
+                iz.StaticText('SplitterWindow left is lilac.', bgcolour='#c8a2c8')
+                iz.StaticText('<=SASH   SplitterWindow right is red.', bgcolour='RED')
+            with iz.SplitterWindow(wx.VERTICAL, sashGravity=0.25, proportion=2):
+                with iz.Panel(bgcolour='#008080', orient=wx.VERTICAL):
+                    iz.StaticText('SplitterWindow top is teal. Move the sash to show the whole thing.')
+                    iz.ListBox("This ListBox doesn't fit unless you move the sash".split(), proportion=1)
+                    
+                iz.StaticText('(SASH RIGHT ABOVE.) SplitterWindow bottom is brown.', bgcolour='BROWN')
 
             with iz.PopupMenu(fr) as self.button_menu:
                 iz.MenuItem('&Disable radio button 2', lambda event:rb2.Enable(False))

@@ -210,9 +210,17 @@ or `toolTip`
   `.SetBackgroundColour` or `.SetToolTip`.
 
 
-### wx.EXPAND is the default for sizers and Panel
+### wx.EXPAND and proportion=1 for sizers and panels
 
-Sizers and wize.Panel have `flag=wx.EXPAND` as the default. (Controls have `flag=0`.)
+Sizers and panels have `flag=wx.EXPAND` as the default. (Controls have `flag=0`.)
+Additionally, panels have proportion=1 as the default.
+
+wx.EXPAND and proportion>0 help sizers and panels be neutral
+intermediaries: If you e.g have a ListCtrl on a Frame, and you change
+that to be a ListCtrl on a Panel on a Frame, then the ListCtrl will
+resize with the frame if it did before.
+
+Panels include wize.Panel and wize.SplitterWindow. 
 
 ### Changing defaults with Default
 
@@ -301,13 +309,27 @@ or, since wx.LI_HORIZONTAL is already the default, shortened to:
 puts a 3 pixels high line horisontal line across the full width.
 
 
+### SplitterWindow
+
+`SplitterWindow(wx.HORIZONTAL)` puts the two nested windows side by side
+with a resizing sash between. `SplitterWindow(wx.VERTICAL)` puts the two
+nested windows on top of one another.
+
+SetSashGravity and SetMinimumPaneSize are called automatically with
+the sashGravity and minimumPaneSize attribute values.
+
+The default of sashGravity=0.5 makes the subwindows equal sized, and
+the default of minimumPaneSize=1 ensures that the second subwindow
+doesn't disappear unexpectedly. (Use minimumPaneSize=0 to restore the
+wxWidgets default behaviour that a double
+click on the sash hides the second window.)
+
 ### Subclassing
 
 When defining a new subclass of a wxPython class, the new subclass
 does not have an implementation in wxWize. The obvious fix is to
 create a such a class, a wize.Control subclass to wrap your
-wx.Control subclass.. 
-
+wx.Control subclass.
 
 That's not at all hard to do.  If you look in wize.py, you can see how
   it's done for the standard controls and do something similar.
@@ -390,6 +412,7 @@ current hierarchy, but stand on their own.
 | Shell				| 							|
 | Spacer			| size						|
 | SpinCtrl			| min, max, initial			|
+| SplitterWindow	| orient, minimumPaneSize	|
 | StaticBox			| label, orient				|
 | StaticLine		| thickness, style			|
 | StaticText		| label						|

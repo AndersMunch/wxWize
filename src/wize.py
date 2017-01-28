@@ -542,6 +542,27 @@ class ScrolledWindow(Window):
     def create_wxwindow(self):
         return self.initfn(wx.ScrolledWindow)(self.parent, self.id, self.pos, self.size, self.style, self.name)
 
+class SplitterWindow(Window):
+    props = Window.props | set(['minimumPaneSize', 'sashGravity', 'sashPosition'])
+    positional = ['orient', 'sashGravity']
+    style = wx.TAB_TRAVERSAL
+    name = 'splitter'
+    proportion = 1
+    flag = wx.EXPAND
+    minimumPaneSize = 1 # 0 enables the misguided default behaviour of irrecoverably hiding RHS on double-click
+    sashGravity = 0.5
+    def create_wxwindow(self):
+        return self.initfn(wx.SplitterWindow)(self.parent, self.id, self.pos, self.size, self.style, self.name)
+    def create_postorder(self):
+        if len(self.zchildren)!=2 or not all(isinstance(ch.w, wx.Window) for ch in self.zchildren):
+            raise TypeError('SplitterWindow must have exactly 2 wx.Window children')
+        if self.sashGravity is not None: self.w.SetSashGravity(self.sashGravity)
+        if self.minimumPaneSize is not None: self.w.SetMinimumPaneSize(self.minimumPaneSize)
+        if self.orient == wx.VERTICAL: # strange as it sounds, SplitHorizontally stacks subwindows vertically
+            self.w.SplitHorizontally(self.zchildren[0].w, self.zchildren[1].w)
+        else:
+            self.w.SplitVertically(self.zchildren[0].w, self.zchildren[1].w)
+
 class SpinCtrl(Window):
     props = Window.props | set(['value','min','max','initial'])
     positional = ['min', 'max', 'initial'] # xx does 'value' (string) have value? check that it works as expected to use initial
