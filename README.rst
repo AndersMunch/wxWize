@@ -26,12 +26,12 @@ GetValue, SetBackgroundColour etc.
 How?
 ++++
 
- * wxWize uses the Python `with` statement to express object nesting.
+ * wxWize uses the Python ``with`` statement to express object nesting.
  * Sizers and windows are integrated in a single hierarchy, meaning that
    you no longer need to type in all those sizer.Add calls -- wxWize
    does that for you, based on relative positions in the
    with-statement hierarchy.
- * `parent` and `id` parameters are gone as required parameters for
+ * ``parent`` and ``id`` parameters are gone as required parameters for
    controls. parent is computed from the hierarchy position. They can
    still be set where needed using named parameters.
   
@@ -62,18 +62,18 @@ To create a wx.Window control, use the identically named wize class.
 The \_\_init\_\_ parameters are the same as for the wxPython object, except for this:
 
    * There are only a 1-2 (or an occasional 3) positional
-     parameters. `parent`, `id`, `pos`, `size`
-     and `style` have been relegated to keyword-only.
-   * `parent` can and should be
+     parameters. ``parent``, ``id``, ``pos``, ``size``
+     and ``style`` have been relegated to keyword-only.
+   * ``parent`` can and should be
      omitted entirely (except for the top-level item).
-   * `flag` and `proportion` parameters
+   * ``flag`` and ``proportion`` parameters
      provide parent sizer Add arguments.
-   * `x`, `y`, `xspan`
-     and `yspan` provide additional parent sizer Add
+   * ``x``, ``y``, ``xspan``
+     and ``yspan`` provide additional parent sizer Add
      arguments, for when the parent sizer is a GridBagSizer.
-   * `EVT_*` parameters provide an event binding
+   * ``EVT_*`` parameters provide an event binding
      shorthand.
-   * `init` or `cls` are useful for subclassing.
+   * ``init`` or ``cls`` are useful for subclassing.
 
 
 Container windows
@@ -84,7 +84,7 @@ wize.StaticBox), use the with statement and nest other windows or sizers
 below it.
 
 If needed, a BoxSizer is created automatically and passed to
-SetSizer. Use  the `orient` parameter
+SetSizer. Use  the ``orient`` parameter
 to set the direction.
 
 If there is only one child and that child is a sizer, then
@@ -100,7 +100,7 @@ wx.Frame/wx.Dialog implemented with wxWize
 When implementing the whole of a top-level window using wxWize,
 define the wxWize hierarchy (of nested with-statements) in the
 \_\_init\_\_ of your wx.Frame/wx.Dialog subclass. Use
-the `init` parameter for the top-level call to
+the ``init`` parameter for the top-level call to
 wize.Frame/wize.Dialog.
 
 
@@ -108,8 +108,8 @@ Nesting a wxWize hierarchy within an existing structure
 ..............................................................
 
 When implementing only a part of the frame/dialog using wxWize,
-  provide a `parent` argument to the top-level wxWize
-  object, and the object returned from `with .. as`
+  provide a ``parent`` argument to the top-level wxWize
+  object, and the object returned from ``with .. as``
   will be ready to put into a sizer in your own plain wxPython code.
 
 Nesting an wxPython window
@@ -117,13 +117,13 @@ Nesting an wxPython window
 
 wxPython objects - windows and sizers - can be inserted into a
 wxWize hierarchy using ordinary Sizer.Add method calls - using the
-`with .. as` value from e.g. a wize.BoxSizer or wize.GridSizer.
+``with .. as`` value from e.g. a wize.BoxSizer or wize.GridSizer.
 The wize.Parent function returns a suitable parent value for
 windows.
 
 
 For windows, an alternative is to create a wize.Window with
-  a `w` parameter, and sizer parameters (flag,proportion)
+  a ``w`` parameter, and sizer parameters (flag,proportion)
   as needed. Then, wxWize handles the sizer Add.  So you'd write e.g.:
 
 .. code-block:: python
@@ -142,16 +142,16 @@ Getting at the wxPython objects
 -------------------------------
 
 The sizers and windows created are ordinary wx.Sizer and wx.Window
-objects. `with wize. as *variable*` binds the
+objects. ``with wize. as *variable*`` binds the
 wrapped  wxPython object to *variable*.
 
 All the wxWize classes are intended to be used in a Python with
-statement.   The value bound with `with .. as` is the
+statement.   The value bound with ``with .. as`` is the
 wrapped wxPython object, a wx.Window or a wx.Sizer.
 
 For simple objects with no sub-objects -- StaticText, TextCtrl,
 Choice etc. -- the with statement can be omitted. In that case, to get
-at the wrapped wxPython object, use the `wx` property.
+at the wrapped wxPython object, use the ``wx`` property.
 
 E.g. instead of writing:
 .. code-block:: python
@@ -174,26 +174,26 @@ Menus
 
 Just like the with statement and indentation is used to place controls into the sizer
 hierarchy, the with statement and indentation can be used to create
-menus and submenus. See the example in `demo_pallette.py`.
+menus and submenus. See the example in ``demo_pallette.py``.
 
-Start with a `wize.MenuBar` or `wize.PopupMenu` at the top level. Nested within
-that, use `wize.MenuItem`'s to create simple menu entries, and `wize.Menu`'s to
+Start with a ``wize.MenuBar`` or ``wize.PopupMenu`` at the top level. Nested within
+that, use ``wize.MenuItem``'s to create simple menu entries, and ``wize.Menu``'s to
 create submenus.
 
-For an application-global menu bar, use `wize.MenuBar`, with the main
+For an application-global menu bar, use ``wize.MenuBar``, with the main
 frame of application as the parent. That is to say, either nest
-`wize.MenuBar` within a `wize.Frame`, or provide the `wx.Frame` in the
-`parent` parameter. The immediate children must be `wize.Menu`'s, not
+``wize.MenuBar`` within a ``wize.Frame``, or provide the ``wx.Frame`` in the
+``parent`` parameter. The immediate children must be ``wize.Menu``'s, not
 MenuItem's.
 
-For a pop-up menu, use `wize.PopupMenu` as the top-level item, nesting
-`wize.MenuItem` and `wize.Menu` objects as desired.
+For a pop-up menu, use ``wize.PopupMenu`` as the top-level item, nesting
+``wize.MenuItem`` and ``wize.Menu`` objects as desired.
 
-`wize.MenuCheck` and `wize.MenuRadio` are shortcuts for
-`wize.MenuItem` with parameters to create a menu item with a checkbox,
+``wize.MenuCheck`` and ``wize.MenuRadio`` are shortcuts for
+``wize.MenuItem`` with parameters to create a menu item with a checkbox,
 with a radio button.
 
-Also there's `wize.MenuSeparator` which adds a separate line between
+Also there's ``wize.MenuSeparator`` which adds a separate line between
 menu items.
 
 Specific features
@@ -203,8 +203,8 @@ EVT\_\* binding
 ---------------
 
 Bind an event callback by using the event name as a named parameter,
-with the callback as its value. I.e. `EVT_FOO=self.OnFoo`
-is a shorthand for `.Bind(wx.EVT_FOO, self.OnFoo)`.
+with the callback as its value. I.e. ``EVT_FOO=self.OnFoo``
+is a shorthand for ``.Bind(wx.EVT_FOO, self.OnFoo)``.
 
 
 Mixing in a window not created using wxWize
@@ -212,7 +212,7 @@ Mixing in a window not created using wxWize
 
 If for whatever reason you don't want wxWize to create a window, but
 you still wxWize to handle the sizers, then create the window yourself
-and pass it to the `w` parameter. wxWize will then use the
+and pass it to the ``w`` parameter. wxWize will then use the
 w-value you provided instead of creating a new window.
 
 
@@ -223,21 +223,21 @@ You can do this even if there's no precise wxWize equivalent to the
 Automatic wx.ALL if border&gt;0
 -------------------------------
 
-If `border` is set, and none of the border flags
+If ``border`` is set, and none of the border flags
 (wx.TOP,wx.BOTTOM,wx.LEFT,wx.RIGHT) are set, then wx.ALL is assumed.
 
 
 fgcolour, bgcolour and toolTip
 ------------------------------
 
-Pass a `fgcolour`, `bgcolour` or `toolTip` parameter as a shorthand
-for  `.SetForegroundColour`, `.SetBackgroundColour` or `.SetToolTip`.
+Pass a ``fgcolour``, ``bgcolour`` or ``toolTip`` parameter as a shorthand
+for  ``.SetForegroundColour``, ``.SetBackgroundColour`` or ``.SetToolTip``.
 
 
 wx.EXPAND and proportion=1 for sizers and panels
 ------------------------------------------------
 
-Sizers and panels have `flag=wx.EXPAND` as the default. (Controls have `flag=0`.)
+Sizers and panels have ``flag=wx.EXPAND`` as the default. (Controls have ``flag=0``.)
 Additionally, panels have proportion=1 as the default.
 
 wx.EXPAND and proportion>0 help sizers and panels be neutral
@@ -269,20 +269,20 @@ GridBagSizer positioning
 ------------------------
 
 Grid position in a GridBagSizer is set using
-separate `x` and `y` parameters (which become
+separate ``x`` and ``y`` parameters (which become
 the position=wx.GBPosition(y,x) argument to wx.GridBagSizer.Add). To span over
-more than one square, there's `xspan`
-and `yspan` (which become the wx.GBSpan(yspan,xspan)
+more than one square, there's ``xspan``
+and ``yspan`` (which become the wx.GBSpan(yspan,xspan)
 argument to wx.GridBagSizer.Add).
 
 
-If both `x` and  `y` are omitted, then the
+If both ``x`` and  ``y`` are omitted, then the
 item is placed to the right of the previous item, or just below. The
-value of the `orient` attribute determines which one:
+value of the ``orient`` attribute determines which one:
 wx.HORIZONTAL, and it's to the right, wx.VERTICAL, and it's below.
 
 
-One or both of `x` and `y` can be
+One or both of ``x`` and ``y`` can be
 omitted, in which case the previous value is reused. Or, the
 previous value plus one.  That happens if a new x value is provided
 that isn't larger than the previous one, then y is incremented, and
@@ -347,10 +347,10 @@ puts a 3 pixels high line horisontal line across the full width.
 SplitterWindow
 --------------
 
-`SplitterWindow(wx.HORIZONTAL)` puts the two nested windows side by side
-with a resizing sash between. `SplitterWindow(wx.VERTICAL)` puts the two
-nested windows on top of one another. (Don't call `SplitVertically` or
-`SplitHorizontally`, it's automatic.)
+``SplitterWindow(wx.HORIZONTAL)`` puts the two nested windows side by side
+with a resizing sash between. ``SplitterWindow(wx.VERTICAL)`` puts the two
+nested windows on top of one another. (Don't call ``SplitVertically`` or
+``SplitHorizontally``, it's automatic.)
 
 The default of sashGravity=0.5 makes the subwindows equal sized, and
 the default of minimumPaneSize=1 ensures that the second subwindow
@@ -374,37 +374,37 @@ define the wxWize object hierarchy by using nested with's in
 \_\_init\_\_. For the root of the with-hierarchy, use a wize.Frame or wize.Dialog
 with init=self.
 
-Finally there's `cls`, which is an option, if the
+Finally there's ``cls``, which is an option, if the
 subclass \_\_init\_\_ parameter list is identical to the parent
 \_\_init\_\_.
 
-Subclassing with `init`
------------------------
+Subclassing with ``init``
+-------------------------
 
-The `init` parameter provides a way to use wxWize from
+The ``init`` parameter provides a way to use wxWize from
 within the \_\_init\_\_ of a wxPython window subclass. It goes like this:
 
 
 Instead of calling parent \_\_init\_\_ from within the subclass
-\_\_init\_\_, create a wxWize object using `init=self`
+\_\_init\_\_, create a wxWize object using ``init=self``
 instead. Now wxWize will call the parent \_\_init\_\_ with the same
 parameters it would otherwise have used to create a new object.
 
-Subclassing with `cls`
-----------------------
+Subclassing with ``cls``
+------------------------
 
 If the subclass \_\_init\_\_ takes the same parameters as the parent
 class, then you can use an existing wxWize-class
-with `cls=MyNewSubclass`. The `cls` parameter
+with ``cls=MyNewSubclass``. The ``cls`` parameter
 tells wxWize to create the window using this class instead of the normal wxPython class.
 
 
 
-Isolating with `Isolate`
-------------------------
+Isolating with ``Isolate``
+--------------------------
 
 wxWize uses global state to track the current wxWize
-parent. `with Isolate():` temporarily sets the wxWize
+parent. ``with Isolate():`` temporarily sets the wxWize
 parent to None, so that objects created in the context do not become linked into the
 current hierarchy, but stand on their own.
 
@@ -419,15 +419,15 @@ BoxSizer		orient
 Button			label
 CheckBox		label
 Choice			choices
-ComboBox		value; choices
-CommandLinkButton	mainLabel; note
+ComboBox		value, choices
+CommandLinkButton	mainLabel, note
 Control			w
 DatePickerCtrl		dt
 Dialog			title
 FileBrowseButton	
 FlexGridSizer		rows
 Frame			title
-GradientButton		label; bitmap
+GradientButton		label, bitmap
 Grid			
 GridBagSizer		
 Isolate
@@ -437,10 +437,10 @@ MaskedNumCtrl		value
 MaskedTextCtrl		value
 Menu			label
 MenuBar			parent
-MenuCheck		text; callback
-MenuItem		text; callback
-MenuRadio		text; callback
-MenuSeparator		text; callback
+MenuCheck		text, callback
+MenuItem		text, callback
+MenuRadio		text, callback
+MenuSeparator		text, callback
 Notebook		
 Page			text
 Panel			proportion
@@ -451,10 +451,10 @@ ScrolledPanel
 ScrolledWindow	
 Shell			
 Spacer			size
-SpinCtrl		min; max; initial
-SplitterWindow		orient; minimumPaneSize
-StaticBox		label; orient
-StaticLine		thickness; style
+SpinCtrl		min, max, initial
+SplitterWindow		orient, minimumPaneSize
+StaticBox		label, orient
+StaticLine		thickness, style
 StaticText		label
 StdDialogButtonSizer	
 TextCtrl		value
@@ -490,7 +490,7 @@ x			GridBagSizer column number.
 y			GridBagSizer row number.
 xspan			GridBagSizer column span.
 yspan			GridBagSizer row span.
-orient			Layout of children; wx.VERTICAL or wx.HORIZONTAL
+orient			Layout of children, wx.VERTICAL or wx.HORIZONTAL
 callback		EVT_MENU action for MenuItem's
 thickness		StaticLine line width.
 InterpClass_args	\*args for Shell to pass to InterpClass 
