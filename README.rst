@@ -26,14 +26,14 @@ GetValue, SetBackgroundColour etc.
 How?
 ++++
 
- * wxWize uses the Python ``with`` statement to express object nesting.
- * Sizers and windows are integrated in a single hierarchy, meaning that
-   you no longer need to type in all those sizer.Add calls -- wxWize
-   does that for you, based on relative positions in the
-   with-statement hierarchy.
- * ``parent`` and ``id`` parameters are gone as required parameters for
-   controls. parent is computed from the hierarchy position. They can
-   still be set where needed using named parameters.
+* wxWize uses the Python ``with`` statement to express object nesting.
+* Sizers and windows are integrated in a single hierarchy, meaning that
+  you no longer need to type in all those sizer.Add calls -- wxWize
+  does that for you, based on relative positions in the
+  with-statement hierarchy.
+* ``parent`` and ``id`` parameters are gone as required parameters for
+  controls. parent is computed from the hierarchy position. They can
+  still be set where needed using named parameters.
   
 
 Installation
@@ -61,19 +61,19 @@ Simple windows
 To create a wx.Window control, use the identically named wize class.
 The \_\_init\_\_ parameters are the same as for the wxPython object, except for this:
 
-   * There are only a 1-2 (or an occasional 3) positional
-     parameters. ``parent``, ``id``, ``pos``, ``size``
-     and ``style`` have been relegated to keyword-only.
-   * ``parent`` can and should be
-     omitted entirely (except for the top-level item).
-   * ``flag`` and ``proportion`` parameters
-     provide parent sizer Add arguments.
-   * ``x``, ``y``, ``xspan``
-     and ``yspan`` provide additional parent sizer Add
-     arguments, for when the parent sizer is a GridBagSizer.
-   * ``EVT_*`` parameters provide an event binding
-     shorthand.
-   * ``init`` or ``cls`` are useful for subclassing.
+* There are only a 1-2 (or an occasional 3) positional
+  parameters. ``parent``, ``id``, ``pos``, ``size``
+  and ``style`` have been relegated to keyword-only.
+* ``parent`` can and should be
+  omitted entirely (except for the top-level item).
+* ``flag`` and ``proportion`` parameters
+  provide parent sizer Add arguments.
+* ``x``, ``y``, ``xspan``
+  and ``yspan`` provide additional parent sizer Add
+  arguments, for when the parent sizer is a GridBagSizer.
+* ``EVT_*`` parameters provide an event binding
+  shorthand.
+* ``init`` or ``cls`` are useful for subclassing.
 
 
 Container windows
@@ -251,9 +251,9 @@ Changing defaults with Default
 ------------------------------
 
 The Default classmethod temporarily changes the default value of one or
-  more attributes. It's a with-statement expression, and takes keyword
-  parameters which are the new defaults for the class for anything
-  created within the scope of the with statement.
+more attributes. It's a with-statement expression, and takes keyword
+parameters which are the new defaults for the class for anything
+created within the scope of the with statement.
 
 For example, to revert the default flag value for a BoxSizer back to 0,
 instead of wx.EXPAND, do this:
