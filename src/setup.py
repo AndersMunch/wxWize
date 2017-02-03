@@ -11,7 +11,7 @@ setup(
     url='https://github.com/AndersMunch/wxWize',
     author='Anders Munch',
     author_email='ajm@jmunch.dk',
-    license='WTFL',
+    license='WTFPL',
     py_modules=['wize'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
