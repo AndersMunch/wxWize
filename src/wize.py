@@ -473,12 +473,17 @@ else:
             return self.initfn(wx.DatePickerCtrl)(self.parent, self.id, self.dt, self.pos, self.size, self.style, self.validator, self.name)
 
 class Grid(Window):
-    props = Window.props | set(['name'])
+    props = Window.props | set(['name', 'numRows', 'numCols', 'selmode'])
+    positional = ['numRows', 'numCols']
     name = 'grid'
     style = wx.WANTS_CHARS
+    numRows = numCols = selmode = None
     def create_wxwindow(self):
         from wx import grid
-        return self.initfn(grid.Grid)(self.parent, self.id, self.pos, self.size, self.style, self.name)
+        res = self.initfn(grid.Grid)(self.parent, self.id, self.pos, self.size, self.style, self.name)
+        if self.numRows is not None and self.numCols is not None:
+            res.CreateGrid(self.numRows, self.numCols, self.selmode if self.selmode is not None else grid.Grid.SelectCells)
+        return res
 
 class ListBox(Control):
     props = Control.props | set(['choices'])
@@ -539,8 +544,14 @@ class ScrolledWindow(Window):
     props = Window.props
     name = 'panel'
     style = wx.HSCROLL|wx.VSCROLL
+    proportion = 1
+    flag = wx.EXPAND
+    xrate = yrate = 10
     def create_wxwindow(self):
-        return self.initfn(wx.ScrolledWindow)(self.parent, self.id, self.pos, self.size, self.style, self.name)
+        res = self.initfn(wx.ScrolledWindow)(self.parent, self.id, self.pos, self.size, self.style, self.name)
+        res.SetScrollRate(self.xrate, self.yrate)
+        res.EnableScrolling((self.style & wx.HSCROLL) != 0, (self.style & wx.VSCROLL) != 0)
+        return res
 
 class SplitterWindow(Window):
     props = Window.props | set(['minimumPaneSize', 'sashGravity', 'sashPosition'])
