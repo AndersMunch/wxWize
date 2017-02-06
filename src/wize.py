@@ -190,6 +190,10 @@ class Sizer(Entity):
     # it's only for sizers, though, Window's still default to flag=0
     flag = wx.EXPAND
     proportion = 0
+    def create_preorder(self):
+        self.sized = self.w
+    def create_postorder(self):
+        pass
 
 class BoxSizer(Sizer):
     positional = ['orient']
