@@ -635,9 +635,10 @@ class MaskedNumCtrl(Control):
     positional = ['value']
     name = 'masked.num'
     style = wx.TE_PROCESS_TAB
+    value = 0
     def create_wxwindow(self):
         import wx.lib.masked
-        return self.initfn(wx.lib.masked.NumCtrl)(self.parent, self.id, self.pos, self.size, self.style, self.validator, self.name, **self.kwargs)
+        return self.initfn(wx.lib.masked.NumCtrl)(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name, **self.kwargs)
 
 class MaskedTextCtrl(Control):
     props = Control.props | set(['value', 'setupEventHandling','kwargs'])
@@ -684,6 +685,30 @@ class Page(Entity):
             self.zparent.w.AddPage(self.zchildren[0].w, self.text, self.select, self.imageId)
         else:
             raise TypeError('Page has %d children, exactly 1 expected' % (len(self.zchildren),))
+        
+class ItemsPicker(Panel):
+    props = Panel.props | set(['choices','label','selectedLabel','ipStyle','kwargs'])
+    positional = ['choices','label','selectedLabel']
+    choices = []
+    label = ''
+    selectedLabel = ''
+    ipStyle = 0
+    def create_wxwindow(self):
+        from wx.lib import itemspicker
+        return self.initfn(itemspicker.ItemsPicker)(self.parent, self.id, self.choices, self.label, self.selectedLabel, self.ipStyle, **self.kwargs)
+
+class ExpandoTextCtrl(TextCtrl):
+    name = 'expando'
+    def create_wxwindow(self):
+        from wx.lib.expando import ExpandoTextCtrl
+        return self.initfn(ExpandoTextCtrl)(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name)
+
+class PlotCanvas(Panel):
+    name = 'plotCanvas'
+    style = 0
+    def create_wxwindow(self):
+        from wx.lib import plot
+        return self.initfn(plot.PlotCanvas)(self.parent, self.id, self.pos, self.style, self.name)
 
 
 ######################################################################

@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(0, '../src')
 import wx
-from wx.lib.inspection import InspectionTool
+from wx.lib import inspection, itemspicker
 import wize as iz
 
 class DemoFrame(wx.Frame):
@@ -30,6 +30,9 @@ class DemoFrame(wx.Frame):
                 iz.CommandLinkButton(u'A Command Link Button', u'(Native to Win7, emulated elsewhere.)', EVT_BUTTON=self.OnButton)
             with iz.TextCtrl('TextCtrl', flag=wx.EXPAND):
                 pass
+            with iz.BoxSizer(wx.HORIZONTAL):
+                iz.StaticText('MaskedNumCtrl:')
+                iz.MaskedNumCtrl(42)
             with iz.Panel(bgcolour='#FFFFBB', proportion=1):
                 with iz.StaticLine.Default(thickness=3, border=5):
                     with iz.BoxSizer(wx.VERTICAL):
@@ -53,8 +56,10 @@ class DemoFrame(wx.Frame):
                 with iz.Panel(bgcolour='#008080', orient=wx.VERTICAL):
                     iz.StaticText('SplitterWindow top is teal. Move the sash to show the whole thing.')
                     iz.ListBox("This ListBox doesn't fit unless you move the sash".split(), proportion=1)
-                    
-                iz.StaticText('(SASH RIGHT ABOVE.) SplitterWindow bottom is brown.', bgcolour='BROWN')
+
+                with iz.Panel(bgcolour='BROWN', orient=wx.VERTICAL):
+                    iz.StaticText('(SASH RIGHT ABOVE.) SplitterWindow bottom is brown.')
+                    iz.ItemsPicker(['fast','cheap','good'], 'Pick two', ipStyle=itemspicker.IP_REMOVE_FROM_CHOICES)
 
             with iz.PopupMenu(fr) as self.button_menu:
                 iz.MenuItem('&Disable radio button 2', lambda event:rb2.Enable(False))
