@@ -646,6 +646,7 @@ class MaskedTextCtrl(Control):
     style = wx.TE_PROCESS_TAB
     setupEventHandling = True
     name = 'maskedTextCtrl'
+    value = ''
     def create_wxwindow(self):
         import wx.lib.masked
         return self.initfn(wx.lib.masked.TextCtrl)(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name,
