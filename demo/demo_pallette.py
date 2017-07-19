@@ -33,6 +33,7 @@ class DemoFrame(wx.Frame):
             with iz.BoxSizer(wx.HORIZONTAL):
                 iz.StaticText('MaskedNumCtrl:')
                 iz.MaskedNumCtrl(42)
+            iz.GradientButton('wx.lib.agw.gradientbutton.GradientButton')
             with iz.Panel(bgcolour='#FFFFBB', proportion=1):
                 with iz.StaticLine.Default(thickness=3, border=5):
                     with iz.BoxSizer(wx.VERTICAL):

@@ -652,15 +652,16 @@ class MaskedTextCtrl(Control):
         return self.initfn(wx.lib.masked.TextCtrl)(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name,
                                       self.setupEventHandling, **self.kwargs)
 
-class GradientButton(Window):
+class GradientButton(Control):
     props = Window.props | set(['bitmap', 'label', 'name'])
     positional = ['label', 'bitmap'] # order reversed, I just don't see buttons with bitmap but no label happening, also this order is Button compatible
     bitmap = None
     style = wx.NO_BORDER
     name = 'gradientbutton'
+    align = 1
     def create_wxwindow(self):
         import wx.lib.agw.gradientbutton
-        return self.initfn(wx.lib.agw.gradientbutton.GradientButton)(self.parent, self.id, self.bitmap, self.pos, self.size, self.style, self.name)
+        return self.initfn(wx.lib.agw.gradientbutton.GradientButton)(self.parent, self.id, self.bitmap, self.label, self.pos, self.size, self.style, validator=self.validator, name=self.name)
 
 class Notebook(Control):
     # To add pages, nest Page children.
