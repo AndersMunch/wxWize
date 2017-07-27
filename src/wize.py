@@ -327,7 +327,7 @@ class Window(Entity):
         if self.bgcolour is not None: self.w.SetBackgroundColour(self.bgcolour)
         if self.fgcolour is not None: self.w.SetForegroundColour(self.fgcolour)
         if self.toolTip is not None:
-            if isinstance(self.toolTip, basestring):
+            if isinstance(self.toolTip, basestring) and hasattr(self.w, 'SetToolTipString'):
                 self.w.SetToolTipString(self.toolTip)
             else:
                 self.w.SetToolTip(self.toolTip)
@@ -436,7 +436,11 @@ class CommandLinkButton(Button):
     positional = ['mainLabel', 'note']
     note = ''
     def create_wxwindow(self):
-        return self.initfn(wx.CommandLinkButton)(self.parent, self.id, self.mainLabel, self.note, self.pos, self.size, self.style, self.validator, self.name)
+        try:
+            from wx.adv import CommandLinkButton # Phoenix
+        except ImportError:
+            CommandLinkButton = wx.CommandLinkButton # Classic
+        return self.initfn(CommandLinkButton)(self.parent, self.id, self.mainLabel, self.note, self.pos, self.size, self.style, self.validator, self.name)
 
 class CheckBox(Control):
     props = Control.props | set(['label'])
@@ -462,19 +466,18 @@ class ComboBox(Control):
     def create_wxwindow(self):
         return self.initfn(wx.ComboBox)(self.parent, self.id, self.value, self.pos, self.size, self.choices, self.style, self.validator, self.name)
 
-try:
-    wx.DatePickerCtrl
-except AttributeError:
-    pass # Phoenix doesn't have wx.DatePickerCtrl yet
-else:
-    class DatePickerCtrl(Control):
-        props = Control.props | set(['dt'])
-        positional = ['dt']
-        name = 'datectrl'
-        style = wx.DP_DEFAULT|wx.DP_SHOWCENTURY
-        dt = wx.DefaultDateTime
-        def create_wxwindow(self):
-            return self.initfn(wx.DatePickerCtrl)(self.parent, self.id, self.dt, self.pos, self.size, self.style, self.validator, self.name)
+class DatePickerCtrl(Control):
+    props = Control.props | set(['dt'])
+    positional = ['dt']
+    name = 'datectrl'
+    style = 4 # 4==wx.adv.DP_DEFAULT|wx.adv.DP_SHOWCENTURY -- don't want to import wx.adv at top-level, som symbolic names are unavailable
+    dt = wx.DefaultDateTime
+    def create_wxwindow(self):
+        try:
+            from wx.adv import DatePickerCtrl
+        except ImportError:
+            DatePickerCtrl = wx.DatePickerCtrl
+        return self.initfn(DatePickerCtrl)(self.parent, self.id, self.dt, self.pos, self.size, self.style, self.validator, self.name)
 
 class Grid(Window):
     props = Window.props | set(['name', 'numRows', 'numCols', 'selmode'])
