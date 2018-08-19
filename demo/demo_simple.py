@@ -11,7 +11,7 @@ def main():
     app = wx.App(redirect=0)
     with iz.Frame(title=u'Hello world') as fr, iz.Panel():
         with iz.StaticBox(label=u"All of them", orient=wx.VERTICAL):
-            for i in xrange(5):
+            for i in range(5):
                 with iz.BoxSizer(orient=wx.HORIZONTAL, border=10):
                     iz.StaticText(label=u"Enter value #%d:" % (i,),
                                   EVT_LEFT_DOWN=OnClick)

@@ -1,6 +1,12 @@
 import sys, contextlib
 import wx
 
+try:
+    basestring
+except NameError:
+    basestring = str
+_phoenix = wx.VERSION[0] >= 4
+    
 ######################################################################
 # Entity, the base class.
 
@@ -327,7 +333,7 @@ class Window(Entity):
         if self.bgcolour is not None: self.w.SetBackgroundColour(self.bgcolour)
         if self.fgcolour is not None: self.w.SetForegroundColour(self.fgcolour)
         if self.toolTip is not None:
-            if isinstance(self.toolTip, basestring) and hasattr(self.w, 'SetToolTipString'):
+            if not _phoenix and isinstance(self.toolTip, basestring):
                 self.w.SetToolTipString(self.toolTip)
             else:
                 self.w.SetToolTip(self.toolTip)
