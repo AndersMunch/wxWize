@@ -39,7 +39,9 @@ How?
 Installation
 ++++++++++++
 
-Copy wize.py to your site-packages directory.
+``$ pip install wxWize``
+
+Or copy wize.py to your site-packages directory.
 
 
 
@@ -123,8 +125,8 @@ windows.
 
 
 For windows, an alternative is to create a wize.Window with
-  a ``w`` parameter, and sizer parameters (flag,proportion)
-  as needed. Then, wxWize handles the sizer Add.  So you'd write e.g.:
+a ``w`` parameter, and sizer parameters (flag,proportion)
+as needed. Then, wxWize handles the sizer Add.  So you'd write e.g.:
 
 .. code-block:: python
 
@@ -154,13 +156,14 @@ Choice etc. -- the with statement can be omitted. In that case, to get
 at the wrapped wxPython object, use the ``wx`` property.
 
 E.g. instead of writing:
+
 .. code-block:: python
 
     with wize.BoxSizer(wx.HORIZONTAL):
         with wize.StaticText(u'Enter name: '): pass
         with wize.TextCtrl() as name_input: pass
 
-you can write, to the same effect::
+you can write, to the same effect:
 
 .. code-block:: python
 
@@ -220,7 +223,7 @@ You can do this even if there's no precise wxWize equivalent to the
   type of window created. Use a superclass such as wize.Window or wize.Panel
   instead.
 
-Automatic wx.ALL if border&gt;0
+Automatic wx.ALL if border>0
 -------------------------------
 
 If ``border`` is set, and none of the border flags
@@ -427,6 +430,7 @@ Dialog			title
 FileBrowseButton	
 FlexGridSizer		rows
 Frame			title
+Gauge			range
 GradientButton		label, bitmap
 Grid			
 GridBagSizer		
