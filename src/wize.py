@@ -85,7 +85,7 @@ class Entity(object):
             self.zparent.zchildren.append(self)
 
         if self.parent is None and self.zparent is None:
-            assert isinstance(self, (TopLevelWindow,TopLevelMenu)), '%s does not have a parent' % (self,)
+            assert isinstance(self, (TopLevelWindow,TopLevelMenu,Sizer)), '%s does not have a parent' % (self,)
 
     def __enter__(self):
         self._entered = True
