@@ -721,6 +721,14 @@ class PlotCanvas(Panel):
         from wx.lib import plot
         return self.initfn(plot.PlotCanvas)(self.parent, self.id, self.pos, self.style, self.name)
 
+class Gauge(Control):
+    name = wx.GaugeNameStr
+    props = Control.props | set(['range','style'])
+    positional = ['range']
+    range = 100
+    style = wx.GA_HORIZONTAL
+    def create_wxwindow(self):
+        return self.initfn(wx.Gauge)(self.parent, self.id, self.range, self.pos, self.size, self.style, self.validator, self.name)
 
 ######################################################################
 # Top-level windows.
