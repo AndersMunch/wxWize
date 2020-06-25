@@ -589,6 +589,32 @@ class SplitterWindow(Window):
             self.w.SplitVertically(self.zchildren[0].w, self.zchildren[1].w)
         if self.sashPosition is not None: self.w.SetSashPosition(self.sashPosition)
 
+class FourWaySplitter(Window):
+    props = Window.props | set(['sashPosition', 'agwStyle', 'HSplit', 'VSplit'])
+    positional = ['sashPosition']
+    name = 'FourWaySplitter'
+    proportion = 1
+    flag = wx.EXPAND
+    sashPosition = None
+    style = 0
+    agwStyle = 0
+    HSplit = 0.5
+    VSplit = 0.5
+    def create_wxwindow(self):
+        from wx.lib.agw import fourwaysplitter
+        return self.initfn(fourwaysplitter.FourWaySplitter)(self.parent, self.id, self.pos, self.size, self.style, self.agwStyle, self.name)
+    def create_postorder(self):
+        if len(self.zchildren)!=4 or not all(isinstance(ch.w, wx.Window) for ch in self.zchildren):
+            raise TypeError('FourWaySplitter must have exactly 4 wx.Window children')
+        for ch in self.zchildren:
+            self.w.AppendWindow(ch.w)
+        if self.sashPosition is not None:
+            hsplit,vsplit = self.sashPosition
+            HSplit = int(round(self.HSplit*10000))
+            VSplit = int(round(self.VSplit*10000))
+        self.w.SetHSplit(HSplit)
+        self.w.SetVSplit(VSplit)
+
 class SpinCtrl(Window):
     props = Window.props | set(['value','min','max','initial'])
     positional = ['min', 'max', 'initial'] # xx does 'value' (string) have value? check that it works as expected to use initial
@@ -729,6 +755,14 @@ class Gauge(Control):
     style = wx.GA_HORIZONTAL
     def create_wxwindow(self):
         return self.initfn(wx.Gauge)(self.parent, self.id, self.range, self.pos, self.size, self.style, self.validator, self.name)
+
+class SearchCtrl(Control):
+    name = wx.SearchCtrlNameStr
+    props = Control.props | set(['value','style'])
+    value = ''
+    style = 0
+    def create_wxwindow(self):
+        return wx.SearchCtrl(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name)
 
 ######################################################################
 # Top-level windows.

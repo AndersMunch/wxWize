@@ -361,6 +361,15 @@ doesn't disappear unexpectedly. (Use minimumPaneSize=0 to restore the
 wxWidgets default behaviour that a double
 click on the sash hides the second window.)
 
+FourWaySplitter
+---------------
+
+``sashPosition=(hfraction,vfraction)`` sizes the subpanels using fractions in the 0..1 range,
+for consistency with sashPosition for SplitterWindow.
+
+Properties HSplit and VSplit are an alternative to sashPosition that uses integers in the
+range 0..10000 instead, for consistency with the SetHSplit and SetVSplit methods of FourWaySplitter.
+
 Subclassing
 -----------
 
@@ -429,6 +438,7 @@ DatePickerCtrl		dt
 Dialog			title
 FileBrowseButton	
 FlexGridSizer		rows
+FourWaySplitter		sashPosition
 Frame			title
 Gauge			range
 GradientButton		label, bitmap
@@ -453,6 +463,7 @@ PropertyGrid
 RadioButton		label
 ScrolledPanel		
 ScrolledWindow	
+SearchCtrl		
 Shell			
 Spacer			size
 SpinCtrl		min, max, initial

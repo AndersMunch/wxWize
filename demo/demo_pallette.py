@@ -11,6 +11,7 @@ class DemoFrame(wx.Frame):
     def __init__(self, parent=None):
         with iz.Frame(init=self, parent=parent, title=u'Hello world',
                       size=(-1, 600)) as fr, iz.Panel(orient=wx.VERTICAL):
+            iz.SearchCtrl(value='Hope you find what you need.')
             iz.Choice(list('abcdef'))
             iz.Gauge(144, flag=wx.EXPAND).wx.SetValue(96)
             iz.ComboBox('g', list('abcdef'))
@@ -63,6 +64,12 @@ class DemoFrame(wx.Frame):
                 with iz.Panel(bgcolour='BROWN', orient=wx.VERTICAL):
                     iz.StaticText('(SASH RIGHT ABOVE.) SplitterWindow bottom is brown.')
                     iz.ItemsPicker(['fast','cheap','good'], 'Pick two', ipStyle=itemspicker.IP_REMOVE_FROM_CHOICES)
+
+            with iz.FourWaySplitter(sashPosition=(0.4, 0.3)):
+                iz.StaticText('40% x 30% of a FourWaySplitter', bgcolour='YELLOW')
+                iz.StaticText('60% x 30% of a FourWaySplitter', bgcolour='GREEN')
+                iz.StaticText('40% x 70% of a FourWaySplitter', bgcolour='GREY')
+                iz.StaticText('60% x 70% of a FourWaySplitter', bgcolour='ORANGE')
 
             with iz.PopupMenu(fr) as self.button_menu:
                 iz.MenuItem('&Disable radio button 2', lambda event:rb2.Enable(False))
