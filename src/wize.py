@@ -745,7 +745,7 @@ class PlotCanvas(Panel):
     style = 0
     def create_wxwindow(self):
         from wx.lib import plot
-        return self.initfn(plot.PlotCanvas)(self.parent, self.id, self.pos, self.style, self.name)
+        return self.initfn(plot.PlotCanvas)(self.parent, self.id, self.pos, self.size, self.style, self.name)
 
 class Gauge(Control):
     name = wx.GaugeNameStr
