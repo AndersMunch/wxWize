@@ -5,7 +5,7 @@ with open('../README.rst','rb') as f:
 
 setup(
     name='wxWize',
-    version='1.1.1',
+    version='1.2.0',
     description='wxPython object builder',
     long_description=long_description,
     url='https://github.com/AndersMunch/wxWize',

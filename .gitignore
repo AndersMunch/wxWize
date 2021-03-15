@@ -63,3 +63,6 @@ target/
 
 # Mac crud
 .DS_Store
+
+# Tags.
+TAGS
