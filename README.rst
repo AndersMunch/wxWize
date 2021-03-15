@@ -193,10 +193,10 @@ For a pop-up menu, use ``wize.PopupMenu`` as the top-level item, nesting
 ``wize.MenuItem`` and ``wize.Menu`` objects as desired.
 
 ``wize.MenuCheck`` and ``wize.MenuRadio`` are shortcuts for
-``wize.MenuItem`` with parameters to create a menu item with a checkbox,
-with a radio button.
+``wize.MenuItem`` with parameters to create a menu item with a checkbox
+or a radio button.
 
-Also there's ``wize.MenuSeparator`` which adds a separate line between
+Also there's ``wize.MenuSeparator`` which adds a separator line between
 menu items.
 
 Specific features
@@ -445,6 +445,7 @@ GradientButton		label, bitmap
 Grid			
 GridBagSizer		
 Isolate
+LabelBook		agwStyle
 ListBox			choices
 ListCtrl		
 MaskedNumCtrl		value

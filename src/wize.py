@@ -708,6 +708,17 @@ class Notebook(Control):
     def create_postorder(self):
         assert all(isinstance(c, Page) for c in self.zchildren)
 
+class LabelBook(Panel):
+    props = Panel.props | set(['agwStyle'])
+    positional = ['agwStyle']
+    agwStyle = 0
+    name = 'LabelBook'
+    def create_wxwindow(self):
+        from wx.lib.agw import labelbook
+        return self.initfn(labelbook.LabelBook)(self.parent, self.id, self.pos, self.size, self.style, self.agwStyle, self.name)
+    def create_postorder(self):
+        assert all(isinstance(c, Page) for c in self.zchildren)
+        
 class Page(Entity):
     # A Notebook page.
     props = Entity.props | set(['text','select','imageId'])
@@ -716,7 +727,7 @@ class Page(Entity):
     imageId = -1 # to use: wx.Notebook.SetImageList
     panel = None
     def create_preorder(self):
-        assert isinstance(self.zparent, Notebook)
+        assert isinstance(self.zparent, (Notebook, LabelBook))
     def create_postorder(self):
         if len(self.zchildren)==1:
             self.zparent.w.AddPage(self.zchildren[0].w, self.text, self.select, self.imageId)
