@@ -376,21 +376,33 @@ class Window(Entity):
                 for c in self.zchildren:
                     _add_to_sizer(self.zchildren_sizer, c)
             self.w.SetSizer(self.zchildren_sizer)
+
     def initfn(self, cls, compatible_types=None):
-        if self.init is not None:
-            assert self.cls is None
-            assert isinstance(self.init, cls) and type(self.init) is not cls, 'expected init=object of %r subclass' % (cls,)
-            return super(type(self.init), self.init).__init__
-        elif self.cls is not None:
+        if self.cls is not None:
             if isinstance(self.cls, type):
                 assert issubclass(self.cls, compatible_types or cls)
             else:
                 assert callable(self.cls)
-            return self.cls
+            cls = self.cls
+            
+        if self.init is not None:
+            assert self.cls is None
+            assert isinstance(self.init, cls) and type(self.init) is not cls, 'expected init=object of %r subclass' % (cls,)
+
+            # This scenario is deliberately unsupported:
+            #   init= is used in the most derived class, but there's an intermediate class with an __init__ that has
+            #   the same signature as the native wx control's __init__.
+            # For this case, an explicit 'cls' must be provided, set to the the intermediate class.
+            #
+            # Any alternative solution that allows 'cls' to be omitted would run into trouble with a different and more
+            # common scenario: Subclassing a class that is implemented using init=.
+            return lambda *args,**kwargs: cls.__init__(self.init, *args, **kwargs)
         else:
             return cls
+
     def create_wxwindow(self):
         raise NotImplementedError
+
     def as_parent(self):
         return self.w
 
