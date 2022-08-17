@@ -386,7 +386,6 @@ class Window(Entity):
             cls = self.cls
             
         if self.init is not None:
-            assert self.cls is None
             assert isinstance(self.init, cls) and type(self.init) is not cls, 'expected init=object of %r subclass' % (cls,)
 
             # This scenario is deliberately unsupported:
