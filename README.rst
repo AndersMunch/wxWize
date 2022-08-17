@@ -444,6 +444,7 @@ Gauge			range
 GradientButton		label, bitmap
 Grid			
 GridBagSizer		
+HyperTreeList		
 Isolate
 LabelBook		agwStyle
 ListBox			choices

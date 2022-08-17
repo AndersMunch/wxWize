@@ -786,6 +786,18 @@ class SearchCtrl(Control):
     def create_wxwindow(self):
         return wx.SearchCtrl(self.parent, self.id, self.value, self.pos, self.size, self.style, self.validator, self.name)
 
+class HyperTreeList(Control):
+    props = Control.props | set(['agwStyle'])
+    positional = []
+    name = 'HyperTreeList'
+    value = ''
+    agwStyle = wx.TR_DEFAULT_STYLE # ==wx.lib.agw.hypertreelist.TR_DEFAULT_STYLE
+    def create_wxwindow(self):
+        from wx.lib.agw import hypertreelist
+        return self.initfn(hypertreelist.HyperTreeList)(
+            parent=self.parent, id=self.id, pos=self.pos, size=self.size, style=self.style, agwStyle=self.agwStyle, validator=self.validator, name=self.name)
+
+
 ######################################################################
 # Top-level windows.
 
