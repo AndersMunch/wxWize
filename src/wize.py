@@ -562,6 +562,7 @@ class ScrolledPanel(Window):
     name = 'scrolledpanel'
     style = wx.TAB_TRAVERSAL
     def create_wxwindow(self):
+        import wx.lib.scrolledpanel
         return self.initfn(wx.lib.scrolledpanel.ScrolledPanel)(self.parent, self.id, self.pos, self.size, self.style, self.name)
 
 class ScrolledWindow(Window):
